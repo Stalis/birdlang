@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+public type Point struct {
+    int x;
+    int y;
+}
+
+public Point* Point::new(int x, int y) {
+    return Point::alloc().init(x, y);
+}
+
+public Point* Point::Copy(Point* self) {
+    return Point::new(self->x, self->y);
+}
+
+public char* Point::ToString(Point* self) {
+    size_t len = 0;
+    len = snprintf(NULL, len, "{ %d, %d }", self->x, self->y);
+
+    char* resString = calloc(sizeof(char), len);
+    if (!resString) {
+        fprintf(stderr, "%s() error: virtual memory allocation failed", __func__);
+    }
+
+    if (snprintf(resString, len + 1, "{ %d, %d }", self->x, self->y) > len + 1) {
+        fprintf (stderr, "%s() error: snprintf returned truncated result.\n", __func__);
+        return NULL;
+    }
+
+    return resString;
+}
+
+// Private
+Point* Point::alloc() {
+    return (Point*)malloc(sizeof(Point));
+}
+
+Point* Point::init(Point* self, int x, int y) {
+    self->x = x;
+    self->y = y;
+    return self;
+}

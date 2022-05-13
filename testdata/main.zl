@@ -1,0 +1,23 @@
+$include <stdio.h>
+
+$macro MULTILINE_MACROS(x)            \
+{                                      \
+    printf("I'm multiline macros\n");  \
+}
+
+int main(int argc, char* argv) {
+    printf("Hello, World!\n");
+    return 0;
+}
+
+struct Point {
+    float x;
+    float y;
+}
+
+struct Point* Point::Copy() {
+    var p = Point::alloc();
+    p.x = self.x;
+    p.y = self.y;
+    return p;
+}
